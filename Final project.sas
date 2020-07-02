@@ -1,0 +1,308 @@
+data ncha564 ;
+set '/folders/myfolders/ncha_h564.sas7bdat';
+run;
+
+*1;
+data ncha564_f;
+set ncha564;
+if NQ8A6=" " then mj= . ;
+else if NQ8A6= "1-2 days" or NQ8A6= "3-5 days" or NQ8A6= "6-9 days" or NQ8A6="10-19 days" or NQ8A6="20-29 days" or NQ8A6="Used daily" then mj=1;
+else if NQ8A6="Have used, but not in last 30 days" or NQ8A6="Have used, not last 30 days" or NQ8A6="Never used" then mj=0;
+run; 
+proc freq data=ncha564_f;
+table mj;
+run;
+
+*7;
+proc freq data=ncha564_f;
+tables mj*gender/ chisq measures;
+run;
+proc reg data=ncha564_f;
+model mj=age;
+run;
+proc freq data=ncha564_f;
+tables mj*white/ chisq measures;
+run;
+proc freq data=ncha564_f;
+tables mj*marital/chisq measures;
+run;
+proc freq data=ncha564_f;
+tables mj*intl/ chisq measures;
+run;
+
+*2;
+data ncha564_f;
+set ncha564_f;
+if NQ13= " " then binge= .;
+else if NQ13= "N/A, don't drink" or NQ13= "None" then binge= 0;
+else binge= 1;
+run;
+
+proc freq data=ncha564_f;
+table binge;
+run;
+
+*3;
+proc freq data=ncha564_f;
+table NQ8A7 NQ8A8 NQ8A9;
+run;
+proc freq data=ncha564_f;
+table NQ8B1 NQ8B2 NQ8B3 NQ8B4 NQ8B5 NQ8B6 NQ8B7 NQ8B8;
+run;
+
+data ncha564_f;
+set ncha564_f;
+if NQ8A7=" " then d1= .;
+else if NQ8A7= "1-2 days" or NQ8A7= "3-5 days" or NQ8A7= "6-9 days" or NQ8A7="10-19 days" or NQ8A7="20-29 days" or NQ8A7="Used daily" then d1=1;
+else d1= 0;
+if NQ8A8=" " then d2= .;
+else if NQ8A8= "1-2 days" or NQ8A8= "3-5 days" or NQ8A8= "6-9 days" or NQ8A8="10-19 days" or NQ8A8="20-29 days" or NQ8A8="Used daily" then d2=1;
+else d2= 0;
+if NQ8A9=" " then d3= .;
+else if NQ8A9= "1-2 days" or NQ8A9= "3-5 days" or NQ8A9= "6-9 days" or NQ8A9="10-19 days" or NQ8A9="20-29 days" or NQ8A9="Used daily" then d3=1;
+else d3= 0;
+if NQ8B1=" " then d4= .;
+else if NQ8B1= "1-2 days" or NQ8B1= "3-5 days" or NQ8B1= "6-9 days" or NQ8B1="10-19 days" or NQ8B1="20-29 days" or NQ8B1="Used daily" then d4=1;
+else d4= 0;
+if NQ8B2=" " then d5= .;
+else if NQ8B2= "1-2 days" or NQ8B2= "3-5 days" or NQ8B2= "6-9 days" or NQ8B2="10-19 days" or NQ8B2="20-29 days" or NQ8B2="Used daily" then d5=1;
+else d5= 0;
+if NQ8B3=" " then d6= .;
+else if NQ8B3= "1-2 days" or NQ8B3= "3-5 days" or NQ8B3= "6-9 days" or NQ8B3="10-19 days" or NQ8B3="20-29 days" or NQ8B3="Used daily" then d6=1;
+else d6= 0;
+if NQ8B4=" " then d7= .;
+else if NQ8B4= "1-2 days" or NQ8B4= "3-5 days" or NQ8B4= "6-9 days" or NQ8B4="10-19 days" or NQ8B4="20-29 days" or NQ8B4="Used daily" then d7=1;
+else d7= 0;
+if NQ8B5=" " then d8= .;
+else if NQ8B5= "1-2 days" or NQ8B5= "3-5 days" or NQ8B5= "6-9 days" or NQ8B5="10-19 days" or NQ8B5="20-29 days" or NQ8B5="Used daily" then d8=1;
+else d8= 0;
+if NQ8B6=" " then d9= .;
+else if NQ8B6= "1-2 days" or NQ8B6= "3-5 days" or NQ8B6= "6-9 days" or NQ8B6="10-19 days" or NQ8B6="20-29 days" or NQ8B6="Used daily" then d9=1;
+else d9= 0;
+if NQ8B7=" " then d10= .;
+else if NQ8B7= "1-2 days" or NQ8B7= "3-5 days" or NQ8B7= "6-9 days" or NQ8B7="10-19 days" or NQ8B7="20-29 days" or NQ8B7="Used daily" then d10=1;
+else d10= 0;
+if NQ8B8=" " then d11= .;
+else if NQ8B8= "1-2 days" or NQ8B8= "3-5 days" or NQ8B8= "6-9 days" or NQ8B8="10-19 days" or NQ8B8="20-29 days" or NQ8B8="Used daily" then d11=1;
+else d11= 0;
+if d1=. or d2=. or d3=. or d4=. or d5=. or d6=. or d7=. or d8=. or d9=. or d10=. or d11=. then drug= .;
+else if d1=1 or d2=1 or d3=1 or d4=1 or d5=1 or d6=1 or d7=1 or d8=1 or d9=1 or d10=1 or d11=1 then drug= 1;
+else drug=0;
+run;
+
+proc freq data=ncha564_f;
+table drug;
+run;
+
+*4 and 5;
+data ncha564_f;
+set ncha564_f;
+format dep_score dep_catfmt.;
+if hopeless=. and overwhelm=. and exhausted=. and lonely=. and sad=. and depressed=. and suicide=. then dep_score=.;
+else dep_score= sum(hopeless, overwhelm, exhausted, lonely, sad, depressed, suicide);
+if dep_score=. then dep_cat=.;
+else if dep_score < 5 then dep_cat=0;
+else dep_cat=1;
+run;
+proc freq data=ncha564_f;
+table dep_score dep_cat; 
+run;
+
+*6;
+proc sort data= ncha564_f;
+by state;
+run;
+data ncha564_f;
+do until (last.state);
+set ncha564_f;
+by state;
+if first.state then new_rml="never_rml";
+if rml=1 then new_rml="ever_rml";
+end;
+do until (last.state);
+set ncha564_f;
+by state;
+output;
+end;
+run;
+
+proc freq data=ncha564_f;
+table rml new_rml;
+run;
+
+*8;
+ods trace on;
+proc freq data= ncha564_f;
+tables new_rml*mj*year;
+where mj=1;
+run;
+ods trace off;
+proc freq data= ncha564_f;
+tables new_rml*mj*year;
+where mj=1;
+ods output CrossTabFreqs=tab_1;
+run;
+
+proc print data=tab_1;
+run;
+proc sort data=tab_1;
+by year;
+run;
+
+proc sgplot data=tab_1;
+series X = year Y = RowPercent/group= new_rml;
+label RowPercent= '30-day marijuana use %';
+title 'trend of 30-day marijuana use between 2009 and 2018';
+refline 2012/axis=x label='RML onset' lineattrs= (color=green thickness=3px pattern=ShortDashDot);
+run;
+
+*9;
+ods trace on;
+proc freq data= ncha564_f;
+tables new_rml*nicotine*year;
+where nicotine=1;
+run;
+ods trace off;
+proc freq data= ncha564_f;
+tables new_rml*nicotine*year;
+where nicotine=1;
+ods output CrossTabFreqs=tab_nic;
+run;
+
+proc print data=tab_nic;
+run;
+proc sort data=tab_nic;
+by year;
+run;
+
+proc sgplot data=tab_nic;
+series X = year Y = RowPercent/group= new_rml;
+label RowPercent= '30-day nicotine use %';
+title 'Trend of 30-day nicotine use between 2009 and 2018';
+refline 2012/axis=x label='RML onset' lineattrs= (color=green thickness=3px pattern=ShortDashDot);
+run;
+
+*10;
+ods trace on;
+proc freq data= ncha564_f;
+tables new_rml*drug*year;
+where drug=1;
+run;
+ods trace off;
+proc freq data= ncha564_f;
+tables new_rml*drug*year;
+where drug=1;
+ods output CrossTabFreqs=tab_drug;
+run;
+
+proc print data=tab_drug;
+run;
+proc sort data=tab_drug;
+by year;
+run;
+
+proc sgplot data=tab_drug;
+series X = year Y = RowPercent/group= new_rml;
+label RowPercent= '30-day illicit drug use %';
+title 'Trend of 30-day illicit drug use between 2009 and 2018';
+refline 2012/axis=x label='RML onset' lineattrs= (color=green thickness=3px pattern=ShortDashDot);
+run;
+
+*11;
+ods trace on;
+proc freq data= ncha564_f;
+tables new_rml*binge*year;
+where binge=1;
+run;
+ods trace off;
+proc freq data= ncha564_f;
+tables new_rml*binge*year;
+where binge=1;
+ods output CrossTabFreqs=tab_binge;
+run;
+
+proc print data=tab_binge;
+run;
+proc sort data=tab_binge;
+by year;
+run;
+
+proc sgplot data=tab_binge;
+series X = year Y = RowPercent/group= new_rml;
+label RowPercent= '2-week binge drinking %';
+title 'Trend of 2-week binge drinking between 2009 and 2018';
+refline 2012/axis=x label='RML onset' lineattrs= (color=green thickness=3px pattern=ShortDashDot);
+run;
+
+*12;
+*for ever rml states;
+proc freq data=ncha564_f;
+tables year*mj*dep_cat/oddsratio;
+where new_rml="ever_rml";
+run;
+
+*for never rml states;
+proc freq data=ncha564_f;
+tables year*mj*dep_cat/oddsratio;
+where new_rml="never_rml";
+run;
+
+*13;
+data ncha564_f;
+set ncha564_f;
+if perc=. then perc_n=.;
+if perc > 0 and perc < 0.5 then perc_n=0;
+else if perc > 0.5 and perc < 1 then perc_n=1;
+else if perc > 100 then perc_n=.;
+else perc_n = perc/100;
+run;
+proc sgplot data=ncha564_f;
+vbox perc_n/ category=year fillattrs = (color=blue transparency= .75);
+title 'Box plot- Student Perception of marijuana use over years';
+run;
+proc anova data=ncha564_f;
+class year;
+model perc_n=year;
+means year;
+run;
+
+*14;
+*perc ~ mj;
+proc sgplot data= ncha564_f;
+vbox perc_n/category=mj fillattrs= (color=green transparency= .75);;
+title 'peer marijuana use perception stratified by 30-day marijuana use';
+run;
+proc ttest data=ncha564_f;
+class mj;
+var perc_n;
+run;
+
+*perc~drug;
+proc sgplot data= ncha564_f;
+vbox perc_n/category=drug fillattrs= (color=pink transparency= .75);;
+title 'peer marijuana use perception stratified by drug use';
+run;
+proc ttest data=ncha564_f;
+class drug;
+var perc_n;
+run;
+
+*perc-nicotine;
+proc sgplot data= ncha564_f;
+vbox perc_n/category=nicotine fillattrs= (color=grey transparency= .75);;
+title 'peer marijuana use perception stratified by 30-day nicotine use';
+run;
+proc ttest data=ncha564_f;
+class nicotine;
+var perc_n;
+run;
+
+*perc-binge;
+proc sgplot data= ncha564_f;
+vbox perc_n/category=binge fillattrs= (color=purple transparency= .75);;
+title 'peer marijuana use perception stratified by 2-week binge drinking';
+run;
+proc ttest data=ncha564_f;
+class binge;
+var perc_n;
+run;
